@@ -4,48 +4,32 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SuperHeros.Data;
-using SuperHeros.Models;
 
 namespace SuperHeros.Controllers
 {
     public class SuperHerosController : Controller
     {
-        //member variable
         private ApplicationDbContext _context;
-
-        //constructor
         public SuperHerosController(ApplicationDbContext context)
         {
-            _context = context; 
+            _context = context;
         }
         // GET: SuperHerosController
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
-            return View(await _context.superHero.ToListAsync());
+            return View(_context.SuperHeros.ToList());
         }
 
         // GET: SuperHerosController/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var superHero = await _context.superHero
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (superHero == null)
-            {
-                return NotFound();
-            }
-
-            return View(superHero);
+            var CurrentHero = _context.SuperHeros.Find(id);
+            return View(CurrentHero);
         }
 
         // GET: SuperHerosController/Create
-        public IActionResult Create()
+        public ActionResult Create()
         {
             return View();
         }
@@ -53,98 +37,58 @@ namespace SuperHeros.Controllers
         // POST: SuperHerosController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,PrimaryAbility,SecondaryAbility,CatchPhrase,AlterEgo")] SuperHero superHero)
+        public ActionResult Create(IFormCollection collection)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(superHero);
-                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(superHero);
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: SuperHerosController/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var superHero = await _context.superHero.FindAsync(id);
-            if (superHero == null)
-            {
-                return NotFound();
-            }
-            return View(superHero);
+            return View();
         }
 
         // POST: SuperHerosController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,PrimaryAbility,SecondaryAbility,CatchPhrase,AlterEgo")] SuperHero superHero)
+        public ActionResult Edit(int id, IFormCollection collection)
         {
-            if (id != superHero.ID)
+            try
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(superHero);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SuperHeroExists(superHero.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
                 return RedirectToAction(nameof(Index));
             }
-            return View(superHero);
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: SuperHerosController/Delete/5
-         public async Task<IActionResult> Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var superHero = await _context.superHero
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (superHero == null)
-            {
-                return NotFound();
-            }
-
-            return View(superHero);
+            return View();
         }
 
         // POST: SuperHerosController/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public ActionResult Delete(int id, IFormCollection collection)
         {
-            var superHero = await _context.superHero.FindAsync(id);
-            _context.superHero.Remove(superHero);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool SuperHeroExists(int id)
-        {
-            return _context.superHero.Any(e => e.ID == id);
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }
