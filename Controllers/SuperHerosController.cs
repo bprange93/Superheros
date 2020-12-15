@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SuperHeros.Data;
+using SuperHeros.Models;
 
 namespace SuperHeros.Controllers
 {
@@ -37,10 +38,12 @@ namespace SuperHeros.Controllers
         // POST: SuperHerosController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(SuperHero superHero)
         {
             try
             {
+                _context.SuperHeros.Add(superHero);
+                _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -52,16 +55,19 @@ namespace SuperHeros.Controllers
         // GET: SuperHerosController/Edit/5
         public ActionResult Edit(int id)
         {
+            var CurrentHero = _context.SuperHeros.Find(id);
             return View();
         }
 
         // POST: SuperHerosController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(SuperHero superHero)
         {
             try
             {
+                _context.SuperHeros.Update(superHero);
+                _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -73,16 +79,20 @@ namespace SuperHeros.Controllers
         // GET: SuperHerosController/Delete/5
         public ActionResult Delete(int id)
         {
+            var CurrentHero = _context.SuperHeros.Find(id);
             return View();
         }
 
         // POST: SuperHerosController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, SuperHero superHero)
         {
             try
             {
+                var DeleteHero = _context.SuperHeros.Find(id);
+                _context.SuperHeros.Remove(DeleteHero);
+                _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
