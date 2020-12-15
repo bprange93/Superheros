@@ -56,7 +56,7 @@ namespace SuperHeros.Controllers
         public ActionResult Edit(int id)
         {
             var CurrentHero = _context.SuperHeros.Find(id);
-            return View();
+            return View(CurrentHero);
         }
 
         // POST: SuperHerosController/Edit/5
@@ -80,7 +80,7 @@ namespace SuperHeros.Controllers
         public ActionResult Delete(int id)
         {
             var CurrentHero = _context.SuperHeros.Find(id);
-            return View();
+            return View(CurrentHero);
         }
 
         // POST: SuperHerosController/Delete/5
