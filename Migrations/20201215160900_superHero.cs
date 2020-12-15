@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SuperHeros.Migrations
 {
-    public partial class init : Migration
+    public partial class superHero : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

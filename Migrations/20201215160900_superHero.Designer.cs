@@ -10,14 +10,14 @@ using SuperHeros.Data;
 namespace SuperHeros.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201016180141_init")]
-    partial class init
+    [Migration("20201215160900_superHero")]
+    partial class superHero
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
+                .HasAnnotation("ProductVersion", "3.1.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
