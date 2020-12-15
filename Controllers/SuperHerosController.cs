@@ -43,7 +43,7 @@ namespace SuperHeros.Controllers
             try
             {
                 _context.SuperHeros.Add(superHero);
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -67,7 +67,7 @@ namespace SuperHeros.Controllers
             try
             {
                 _context.SuperHeros.Update(superHero);
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -92,7 +92,7 @@ namespace SuperHeros.Controllers
             {
                 var DeleteHero = _context.SuperHeros.Find(id);
                 _context.SuperHeros.Remove(DeleteHero);
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             catch
