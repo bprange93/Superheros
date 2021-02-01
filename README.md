@@ -1,1 +1,1 @@
-# Superheros
+Built using Visual Studios CSS and some minimal HTML. This project was my first dip into databases and using HTML. This is a super basic and straight to the point on how MVC works and how they all connect to one another. 
